@@ -13,38 +13,18 @@ import { useNavigation } from "@react-navigation/native";
 
 import auth from "@react-native-firebase/auth";
 
-export default function Login() {
+export default function Cadastrar() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
-  const checkCredentials = async () => {
-    try {
-      const userCredential = await auth().signInWithEmailAndPassword(
-        email,
-        password
-      );
-
-      console.log("Autenticação bem-sucedida!", userCredential.user);
-      navigation.navigate("DashboardInicial");
-      // Aqui você pode realizar ações adicionais para o usuário autenticado
-    } catch (error) {
-      console.error("Erro na autenticação:", error);
-      switch (error.code) {
-        case "auth/wrong-password":
-          Alert.alert("Senha inválida");
-          break;
-        case "auth/email-already-in-use":
-          Alert.alert("Email em uso");
-          break;
-        case "auth/invalid-email":
-          Alert.alert("Email Inválido");
-          break;
-      }
-    } // Exibe mensagens caso dê erro
-  };
-
-  // Chame a função checkCredentials passando o email e a senha
-
+  function handleNewAccount() {
+    auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => Alert.alert("Certo"))
+      .catch((error) => console.log(error));
+    console.log(email);
+    console.log(password);
+  }
   function ligarDisp() {
     database()
       .ref("/")
@@ -92,18 +72,18 @@ export default function Login() {
           onChangeText={setPassword}
         />
         {/* <View style={styles.socialMedia}>
-          <TouchableOpacity style={styles.buttonSocialMedia}>
-            <AntDesign name="google" size={24} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonSocialMedia}>
-            <AntDesign name="google" size={24} color="black" />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonSocialMedia}>
-            <AntDesign name="google" size={24} color="black" />
-          </TouchableOpacity>
-        </View> */}
-        <TouchableOpacity style={styles.buttonLogin} onPress={checkCredentials}>
-          <Text>Login</Text>
+           <TouchableOpacity style={styles.buttonSocialMedia}>
+             <AntDesign name="google" size={24} />
+           </TouchableOpacity>
+           <TouchableOpacity style={styles.buttonSocialMedia}>
+             <AntDesign name="google" size={24} color="black" />
+           </TouchableOpacity>
+           <TouchableOpacity style={styles.buttonSocialMedia}>
+             <AntDesign name="google" size={24} color="black" />
+           </TouchableOpacity>
+         </View> */}
+        <TouchableOpacity onPress={handleNewAccount} style={styles.buttonLogin}>
+          <Text>Cadastrar</Text>
         </TouchableOpacity>
       </View>
     </View>

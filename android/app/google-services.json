@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "149741882145",
+    "firebase_url": "https://energycontrol-57b78-default-rtdb.firebaseio.com",
+    "project_id": "energycontrol-57b78",
+    "storage_bucket": "energycontrol-57b78.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:149741882145:android:46fc7bac6e392ac56c4c60",
+        "android_client_info": {
+          "package_name": "com.johnwesley.EnergyControl"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "149741882145-6lpolo28ov2qua2n8mc8jd4hudp7453u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxeWDpT6Z-Hs_XICWZ4FT1oJXb60FwMlM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "149741882145-6lpolo28ov2qua2n8mc8jd4hudp7453u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
