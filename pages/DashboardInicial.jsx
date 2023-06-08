@@ -28,11 +28,12 @@ export default function DashboardInicial() {
         setStateOfLed(`O led está: ${snapshot.val()}`);
       });
   }
-
+  lerDisp();
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Entypo name="menu" size={24} color="white" />
+        <Text>{}</Text>
         <FontAwesome name="user-circle" size={24} color="white" />
       </View>
       <View style={styles.sectionButtons}>
@@ -41,9 +42,6 @@ export default function DashboardInicial() {
         </TouchableOpacity>
         <TouchableOpacity onPress={desligarDisp} style={styles.btn}>
           <Text style={styles.textBtn}>Desligar</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={lerDisp} style={styles.btn}>
-          <Text style={styles.textBtn}>Teste</Text>
         </TouchableOpacity>
       </View>
       <Text style={styles.textState}>{stateOfLed}</Text>

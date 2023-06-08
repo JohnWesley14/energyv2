@@ -8,23 +8,42 @@ import {
   Alert,
 } from "react-native";
 import React, { useState } from "react";
-import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 import auth from "@react-native-firebase/auth";
+import * as Yup from "yup";
 
 export default function Login() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  async function validateInput() {
+    try {
+      const schema = Yup.object().shape({
+        email: Yup.string()
+          .email("Digite um email válido")
+          .required("Email Obrigatório"),
+        password: Yup.string()
+          .required("Senha Obrigatório")
+          .min(8, "A senha deve ter no mínimo 8 caracteres"),
+      });
+
+      await schema.validate({ email, password });
+
+      checkCredentials();
+    } catch (error) {
+      if (error instanceof Yup.ValidationError) Alert.alert(error.message);
+    }
+  }
 
   const checkCredentials = async () => {
     try {
       const userCredential = await auth().signInWithEmailAndPassword(
         email,
         password
-      );
+      ); //Tenta fazer o login com o email e a senha digitados.
 
       console.log("Autenticação bem-sucedida!", userCredential.user);
+      console.log(`Seu email é: ${userCredential.user.email}`);
       navigation.navigate("DashboardInicial");
       // Aqui você pode realizar ações adicionais para o usuário autenticado
     } catch (error) {
@@ -38,6 +57,10 @@ export default function Login() {
           break;
         case "auth/invalid-email":
           Alert.alert("Email Inválido");
+          break;
+        case "auth/user-not-found":
+          Alert.alert("Usuário não encontrado");
+
           break;
       }
     } // Exibe mensagens caso dê erro
@@ -85,11 +108,13 @@ export default function Login() {
           style={styles.inputText}
           placeholder="Email"
           onChangeText={setEmail}
+          value={email}
         />
         <TextInput
           style={styles.inputText}
           placeholder="Senha"
           onChangeText={setPassword}
+          value={password}
         />
         {/* <View style={styles.socialMedia}>
           <TouchableOpacity style={styles.buttonSocialMedia}>
@@ -102,7 +127,7 @@ export default function Login() {
             <AntDesign name="google" size={24} color="black" />
           </TouchableOpacity>
         </View> */}
-        <TouchableOpacity style={styles.buttonLogin} onPress={checkCredentials}>
+        <TouchableOpacity style={styles.buttonLogin} onPress={validateInput}>
           <Text>Login</Text>
         </TouchableOpacity>
       </View>
